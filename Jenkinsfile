@@ -26,7 +26,7 @@ pipeline {
          stage('publish') {
               steps {
                         echo "publishing local docker image"
-                        sh "sbt docker:publishLocal"
+                        sh "sbt docker:publish"
                     }
                 }
 
