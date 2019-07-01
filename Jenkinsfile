@@ -26,7 +26,6 @@ pipeline {
          stage('publish') {
               steps {
                         echo "publishing local docker image"
-                        sh "chmod 777 /var/run/docker.sock"
                         sh "sbt docker:publish"
                     }
                 }
