@@ -30,7 +30,6 @@ pipeline {
                         sh "sbt docker:stage"
                         echo "publishing local docker image"
                         sh "sbt docker:publishLocal"
-"
                     }
                 }
 
