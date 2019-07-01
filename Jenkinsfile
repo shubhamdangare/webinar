@@ -26,10 +26,14 @@ pipeline {
 
          stage('staging') {
               steps {
-                      echo "creating docker image"
+                        echo "creating docker image"
                         sh "sbt docker:stage"
+                    }
+                }
+            stage('publish') {
+              steps {
                         echo "publishing local docker image"
-                        sh "sudo sbt docker:publishLocal"
+                        sh "sbt docker:publishLocal"
                     }
                 }
 
