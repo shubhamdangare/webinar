@@ -39,7 +39,7 @@ lazy val root = (project in file("."))
     )
   )
   .settings(dockerSettings: _*)
-  .enablePlugins(JavaAppPackaging, DockerPlugin)
+  .enablePlugins(JavaAppPackaging)
 
 lazy val dockerSettings = Seq(
   dockerBaseImage := "openjdk:8-jre-alpine",

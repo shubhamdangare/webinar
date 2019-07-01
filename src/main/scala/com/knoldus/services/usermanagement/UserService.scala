@@ -20,8 +20,7 @@ class UserService(userDao: UserDao) {
                      userName: String,
                      name: String,
                      email: String,
-                     password: String,
-
+                     password: String
                    ): Future[Either[SignUpError, UserResponse]] = Future {
 
     val emailFlag = email.endsWith("@knoldus.in") || email.endsWith("@knoldus.com")
