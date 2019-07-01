@@ -29,7 +29,7 @@ pipeline {
                       echo "creating docker image"
                         sh "sbt docker:stage"
                         echo "publishing local docker image"
-                        sh "sbt docker:publishLocal
+                        sh "sbt docker:publishLocal"
 "
                     }
                 }
