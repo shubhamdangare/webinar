@@ -5,7 +5,7 @@ import java.time.Instant
 import com.knoldus.common.user.UserDetails
 import com.knoldus.dao.UserDao
 import com.knoldus.routes.contract.user.UserResponse
-import com.knoldus.services.usermanagement.UserService.SignUpError
+import com.knoldus.services.usermanagement.UserService.{SignInError, SignUpError}
 import com.knoldus.services.usermanagement.UserService.SignUpError.UserIdIsNotUnique
 import scalikejdbc._
 
@@ -51,6 +51,17 @@ class UserService(userDao: UserDao) {
     }
 
   }
+
+  def signInUser(email: String, password: String): Future[Either[SignInError, UserDetails]] = Future {
+    val userData = userDao.get(email, password)
+    userData match {
+      case Some(value) => Right(value)
+      case None => Left(SignInError.InvalidCredentials)
+    }
+  }
+
+
+
 
 }
 

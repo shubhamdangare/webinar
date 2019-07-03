@@ -19,10 +19,10 @@ class UserDao(dbConnection: ConnectionProvider) extends SQLDatabaseAPI {
     }.update().apply()
   }
 
-  override def get(email: String, password: String): Option[UserDetails] = {
+  override def get(userName: String, password: String): Option[UserDetails] = {
     val userTable = UserDetails.syntax("m")
     withSQL {
-      select.from(UserDetails as userTable).where.eq(userTable.email, email).and.eq(userTable.password, password)
+      select.from(UserDetails as userTable).where.eq(userTable.userName, userName).and.eq(userTable.password, password)
     }.map(UserDetails(userTable.resultName)).single.apply()
   }
 
