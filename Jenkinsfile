@@ -29,7 +29,6 @@ pipeline {
                         sh "sbt docker:publishLocal"
                     }
                 }
-
     }
     post {
         always {

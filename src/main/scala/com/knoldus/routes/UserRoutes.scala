@@ -4,7 +4,7 @@ import akka.http.scaladsl.model._
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import com.knoldus.routes.contract.ErrorResponse
-import com.knoldus.routes.contract.user.{TokenResponse, UserRequest}
+import com.knoldus.routes.contract.user.{TokenResponse, UserRequest, UserSignRequest}
 import com.knoldus.services.usermanagement.UserService
 import com.knoldus.services.usermanagement.UserService.SignInError.InvalidCredentials
 import com.knoldus.services.usermanagement.UserService.SignUpError._
@@ -16,14 +16,14 @@ class UserRoutes(val userDBService: UserService) extends PlayJsonSupport {
 
   val route: Route = {
     path("sign-in") {
-      (get & parameters('user.as[String], 'pass.as[String])) { (name, pass) => {
-        onSuccess(userDBService.signInUser(name, pass)) {
-          case Right(user) => complete(TokenResponse((user.userName, user.name, user.email).toString()))
+      (post & entity(as[UserSignRequest])) { userData => {
+        onSuccess(userDBService.signInUser(userData.userName, userData.password)) {
+          case Right(user) => complete(TokenResponse(s"${user.userName} ${user.name} ${user.email}"))
           case Left(error) => complete(translateError(error))
         }
       }
       }
-    }~ path("register-user") {
+    } ~ path("register-user") {
       (post & entity(as[UserRequest])) { userRequest =>
         val data = userDBService.registerUsers(
           userRequest.userName,
